@@ -8,8 +8,8 @@ import { removeStory } from '../../redux/stories';
 
 class StoryItem extends React.Component {
   render() {
-    const { story, removeStory } = this.props;
-
+    const { story, removeStory, currentUser } = this.props;
+    const authorized = currentUser && (currentUser.isAdmin || currentUser.id === story.author_id);
     return (
       <li className="list-group-item story-item">
         <ul className="list-inline">
@@ -20,13 +20,17 @@ class StoryItem extends React.Component {
             <span>by</span>
           </li>
           <li>
-            <Link to={`/users/${story.author_id}`}>{story.author.name}</Link>
+            <Link to={`/users/${story.author_id}`}>{story.author.name || story.author.email}</Link>
           </li>
         </ul>
-        <button className="btn btn-default btn-xs"
-                onClick={ () => removeStory(story.id) }>
-          <span className="glyphicon glyphicon-remove"></span>
-        </button>
+        {
+          authorized ?
+          <button className="btn btn-default btn-xs"
+                  onClick={ () => removeStory(story.id) }>
+            <span className="glyphicon glyphicon-remove"></span>
+          </button>
+          : null
+        }
       </li>
     );
   }
@@ -35,7 +39,13 @@ class StoryItem extends React.Component {
 
 /* -----------------    CONTAINER     ------------------ */
 
-const mapState = null;
-const mapDispatch = { removeStory }
+const mapState = ({ currentUser }) => ({ currentUser });
+// // equivalent to:
+// const mapState = (state) => {
+//   return {
+//     currentUser: state.currentUser
+//   };
+// };
+const mapDispatch = { removeStory };
 
 export default connect(mapState, mapDispatch)(StoryItem);

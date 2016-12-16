@@ -27,7 +27,7 @@ class UserList extends Component {
       <div className="container">
         <div className="user-query">
           { this.renderUserSearch() }
-          { this.renderNewUserWidget() }
+          { this.props.isAdmin ? this.renderNewUserWidget() : null }
         </div>
         <br />
         <br />
@@ -151,7 +151,12 @@ class UserList extends Component {
 
 /* -----------------    CONTAINER     ------------------ */
 
-const mapState = ({ users }) => ({ users });
+const mapState = ({ users, currentUser }) => (
+  {
+    isAdmin: currentUser && currentUser.isAdmin,
+    users
+  }
+);
 
 const mapDispatch = { addUser };
 

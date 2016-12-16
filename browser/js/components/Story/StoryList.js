@@ -22,13 +22,14 @@ class StoryList extends React.Component {
   }
 
   render() {
+    const { currentUser } = this.props;
     return (
       <div className="container">
         { this.renderStorySearch() }
         <br />
 
         <ul className="list-group">
-        { this.renderNewStoryWidget() }
+        { currentUser ? this.renderNewStoryWidget() : null }
         {
           this.props.stories
           .filter(this.filterStory)
@@ -69,6 +70,7 @@ class StoryList extends React.Component {
   }
 
   renderNewStoryWidget() {
+    const { currentUser } = this.props;
     return (
       <form onSubmit={this.onSubmit} className="list-group-item story-item">
         <ul className="list-inline">
@@ -84,14 +86,18 @@ class StoryList extends React.Component {
             <span>by</span>
           </li>
           <li>
-            <select name="author_id" defaultValue="" required>
-              <option value="" disabled>(select an author)</option>
-              {
-                this.props.users.map((user, index) => (
-                  <option key={index} value={user.id}>{user.name}</option>
-                ))
-              }
-            </select>
+            {
+              currentUser.isAdmin ?
+              <select name="author_id" defaultValue="" required>
+                <option value="" disabled>(select an author)</option>
+                {
+                  this.props.users.map((user, index) => (
+                    <option key={index} value={user.id}>{user.name}</option>
+                  ))
+                }
+              </select>
+              : <Link to={`/users/${currentUser.id}`}>{currentUser.name || currentUser.email}</Link>
+            }
           </li>
         </ul>
         <button
@@ -115,19 +121,21 @@ class StoryList extends React.Component {
 
   onSubmit(event) {
     event.preventDefault();
+    const { addStory, currentUser} = this.props;
+    const { author_id, title } = event.target;
     const story = {
-      author_id: event.target.author_id.value,
-      title: event.target.title.value
+      author_id: author_id ? author_id.value : currentUser.id,
+      title: title.value
     };
-    this.props.addStory(story);
-    event.target.author_id.value = '';
+    addStory(story);
+    if (author_id) event.target.author_id.value = '';
     event.target.title.value = '';
   }
 }
 
 /* -----------------    CONTAINER     ------------------ */
 
-const mapState = ({ users, stories }) => ({ users, stories });
+const mapState = ({ users, stories, currentUser }) => ({ users, stories, currentUser });
 
 const mapDispatch = { addStory };
 

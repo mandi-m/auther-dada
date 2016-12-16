@@ -1,6 +1,6 @@
 import React from 'react';
-import { connect } from'react-redux';
-import { browserHistory } from 'react-router';
+import { connect } from 'react-redux';
+import { signupAndGoToUser } from '../redux/auth';
 
 /* -----------------    COMPONENT     ------------------ */
 
@@ -46,7 +46,7 @@ class Signup extends React.Component {
         <div className="buffer oauth">
           <p>
             <a target="_self"
-               href="/auth/google"
+               href="/api/auth/google"
                className="btn btn-social btn-google">
             <i className="fa fa-google"></i>
             <span>{message} with Google</span>
@@ -58,15 +58,28 @@ class Signup extends React.Component {
   }
 
   onSignupSubmit(event) {
-    const { message } = this.props;
+    // const { message } = this.props;
     event.preventDefault();
-    console.log(`${message} isn't implemented yet`);
+    const credentials = {
+      email: event.target.email.value,
+      password: event.target.password.value
+    };
+    this.props.signup(credentials);
   }
 }
 
 /* -----------------    CONTAINER     ------------------ */
 
 const mapState = () => ({ message: 'Sign up' });
-const mapDispatch = null;
+
+const mapDispatch = { signup: signupAndGoToUser };
+// // equivalent to:
+// const mapDispatch = (dispatch) => {
+//   return {
+//     signup: function (credentials) {
+//       dispatch(signupAndGoToUser(credentials));
+//     }
+//   };
+// };
 
 export default connect(mapState, mapDispatch)(Signup);

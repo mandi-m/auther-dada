@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import ContentEditable from 'react-contenteditable';
 import { updateStory } from '../../redux/stories';
+import { Link } from 'react-router';
 
 /* -----------------    COMPONENT     ------------------ */
 
@@ -15,6 +16,7 @@ class StoryDetail extends React.Component {
         title: '',
         author_id: '',
         paragraphs: [],
+        author: {}
       }
     };
     this.onStoryUpdate = this.onStoryUpdate.bind(this);
@@ -28,37 +30,45 @@ class StoryDetail extends React.Component {
   }
 
   render() {
-    const {users} = this.props;
+    const {users, currentUser} = this.props;
     const story = this.state.story;
+    const authorized = currentUser && (currentUser.isAdmin || currentUser.id === story.author_id);
     if (!story) return <div></div>; // the story id is invalid or the data isnt loaded yet
     return (
       <div className="container story-container">
         <ul className="list-inline large-font">
           <li>
             <input
+              readOnly={ !authorized }
               className="form-like large-font"
               value={story.title}
               onChange={evt => this.onStoryUpdate({ title: evt.target.value })}
+              contentEditable={ !!authorized }
             />
           </li>
           <li><span className="muted">by</span></li>
           <li>
-            <select
-              value={story.author_id}
-              onChange={evt => this.onStoryUpdate({ author_id: evt.target.value })}>
             {
-              users.map((user, index) => (
-                <option key={index} value={user.id}>{user.name}</option>
-              ))
+              currentUser && currentUser.isAdmin ?
+              <select
+                value={story.author_id}
+                onChange={evt => this.onStoryUpdate({ author_id: evt.target.value })}>
+                {
+                  users.map((user, index) => (
+                    <option key={index} value={user.id}>{user.name}</option>
+                  ))
+                }
+              </select>
+              : <Link to={`/users/${story.author_id}`}>{story.author.name || story.author.email}</Link>
             }
-            </select>
           </li>
         </ul>
         <br />
         <ContentEditable
-           placeholder="(text here)"
-           html={this.renderRawHTML()}
-           onChange={evt => this.onStoryUpdate({ paragraphs: evt.target.value })}>
+          disabled={ !authorized }
+          placeholder="(text here)"
+          html={this.renderRawHTML()}
+          onChange={evt => this.onStoryUpdate({ paragraphs: evt.target.value })}>
         </ContentEditable>
       </div>
     );
@@ -97,9 +107,9 @@ class StoryDetail extends React.Component {
 
 /* -----------------    CONTAINER     ------------------ */
 
-const mapState = ({ users, currentStory }, ownProps) => {
+const mapState = ({ users, currentStory, currentUser }, ownProps) => {
   const story = currentStory;
-  return { story, users };
+  return { story, users, currentUser };
 };
 
 const mapDispatch = (dispatch) => {

@@ -16,7 +16,8 @@ class UserDetail extends React.Component {
   }
 
   render() {
-    const { user, stories } = this.props;
+    const { user, stories, currentUser } = this.props;
+    const authorized = currentUser && (currentUser.isAdmin || currentUser.id === user.id);
     if (!user) return <div></div>  // the user id is invalid or data isn't loaded yet
     return (
       <div className="container">
@@ -26,18 +27,22 @@ class UserDetail extends React.Component {
             <h2 className="panel-title large-font">stories</h2>
           </div>
           <ul className="list-group">
-            <form className="list-group-item story-item" onSubmit={this.onSubmit}>
-              <input
-                name="title"
-                type="text"
-                className="form-like"
-                required
-                placeholder="Story Title"
-              />
-              <button type="submit" className="btn btn-warning btn-xs">
-                <span className="glyphicon glyphicon-plus"></span>
-              </button>
-            </form>
+            {
+              authorized ?
+              <form className="list-group-item story-item" onSubmit={this.onSubmit}>
+                <input
+                  name="title"
+                  type="text"
+                  className="form-like"
+                  required
+                  placeholder="Story Title"
+                />
+                <button type="submit" className="btn btn-warning btn-xs">
+                  <span className="glyphicon glyphicon-plus"></span>
+                </button>
+              </form>
+              : null
+            }
             {
               stories
               .filter(story => story.author_id === user.id)
@@ -64,11 +69,12 @@ class UserDetail extends React.Component {
 
 /* -----------------    CONTAINER     ------------------ */
 
-const mapState = ({ users, stories }, ownProps) => {
+const mapState = ({ users, stories, currentUser }, ownProps) => {
   const param_id = Number(ownProps.params.id);
   return {
     user: _.find(users, user => user.id === param_id),
-    stories
+    stories,
+    currentUser
   };
 };
 

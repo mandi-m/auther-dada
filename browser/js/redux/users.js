@@ -2,16 +2,16 @@ import axios from 'axios';
 
 /* -----------------    ACTIONS     ------------------ */
 
-const INITIALIZE = 'INITIALIZE_USERS'
-const CREATE     = 'CREATE_USER'
+const INITIALIZE    = 'INITIALIZE_USERS'
+const CREATE        = 'CREATE_USER'
 export const REMOVE = 'REMOVE_USER'
-const UPDATE     = 'UPDATE_USER'
+const UPDATE        = 'UPDATE_USER'
 
 
 /* ------------   ACTION CREATORS     ------------------ */
 
-const init  = users => ({ type: INITIALIZE, users })
-const create = user  => ({ type: CREATE, user })
+const init   = users => ({ type: INITIALIZE, users })
+export const create = user => ({ type: CREATE, user })
 const remove = id    => ({ type: REMOVE, id })
 const update = user  => ({ type: UPDATE, user })
 

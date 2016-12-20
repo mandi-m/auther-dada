@@ -32,8 +32,8 @@ class StoryDetail extends React.Component {
   render() {
     const {users, currentUser} = this.props;
     const story = this.state.story;
-    const authorized = currentUser && (currentUser.isAdmin || currentUser.id === story.author_id);
     if (!story) return <div></div>; // the story id is invalid or the data isnt loaded yet
+    const authorized = currentUser && (currentUser.isAdmin || currentUser.id === story.author_id);
     return (
       <div className="container story-container">
         <ul className="list-inline large-font">
@@ -103,8 +103,8 @@ class StoryDetail extends React.Component {
 
 /* -----------------    CONTAINER     ------------------ */
 
-const mapState = ({ users, currentStory, currentUser }, ownProps) => {
-  const story = currentStory;
+const mapState = ({ users, stories, currentUser }, ownProps) => {
+  const story = stories.find(story => story.id === +ownProps.params.id);
   return { story, users, currentUser };
 };
 

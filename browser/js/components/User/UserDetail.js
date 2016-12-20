@@ -17,8 +17,8 @@ class UserDetail extends React.Component {
 
   render() {
     const { user, stories, currentUser } = this.props;
-    const authorized = currentUser && (currentUser.isAdmin || currentUser.id === user.id);
     if (!user) return <div></div>  // the user id is invalid or data isn't loaded yet
+    const authorized = currentUser && (currentUser.isAdmin || currentUser.id === user.id);
     return (
       <div className="container">
         <UserItem user={user}></UserItem>

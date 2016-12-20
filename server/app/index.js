@@ -13,7 +13,7 @@ app.use(require('./body-parsing.middleware'));
 app.use(session({
   secret: 'winGARdium leviOHsa',
   resave: false,
-  saveUnitiliazed: false
+  saveUninitialized: false
 }));
 
 app.use(require('./passport.middleware'));

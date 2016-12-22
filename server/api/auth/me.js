@@ -57,7 +57,7 @@ router.put('/', function (req, res, next) {
       });
       // // before, without Passport:
       // req.session.userId = user.id;
-      res.json(user);
+      // res.json(user);
     }
   })
   .catch(next);

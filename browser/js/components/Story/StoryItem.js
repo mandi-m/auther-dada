@@ -25,9 +25,10 @@ class StoryItem extends React.Component {
         </ul>
         {
           authorized ?
-          <button className="btn btn-default btn-xs"
-                  onClick={ () => removeStory(story.id) }>
-            <span className="glyphicon glyphicon-remove"></span>
+          <button
+            className="btn btn-default btn-xs"
+            onClick={ () => removeStory(story.id) }>
+            <span className="glyphicon glyphicon-remove" />
           </button>
           : null
         }
@@ -46,6 +47,7 @@ const mapState = ({ currentUser }) => ({ currentUser });
 //     currentUser: state.currentUser
 //   };
 // };
+
 const mapDispatch = { removeStory };
 
 export default connect(mapState, mapDispatch)(StoryItem);

@@ -64,7 +64,7 @@ class StoryList extends React.Component {
             />
           </li>
         </ul>
-        <span className="glyphicon glyphicon-search"></span>
+        <span className="glyphicon glyphicon-search" />
       </div>
     );
   }
@@ -91,8 +91,8 @@ class StoryList extends React.Component {
               <select name="author_id" defaultValue="" required>
                 <option value="" disabled>(select an author)</option>
                 {
-                  this.props.users.map((user, index) => (
-                    <option key={index} value={user.id}>{user.name}</option>
+                  this.props.users.map(user => (
+                    <option key={user.id} value={user.id}>{user.name}</option>
                   ))
                 }
               </select>
@@ -103,7 +103,7 @@ class StoryList extends React.Component {
         <button
             type="submit"
             className="btn btn-warning btn-xs pull-right">
-            <span className="glyphicon glyphicon-plus"></span>
+            <span className="glyphicon glyphicon-plus" />
          </button>
       </form>
     );

@@ -22,9 +22,9 @@ class Navbar extends React.Component {
               className="navbar-toggle collapsed"
               data-toggle="collapse"
               data-target=".navbar-collapse">
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
+              <span className="icon-bar" />
+              <span className="icon-bar" />
+              <span className="icon-bar" />
             </button>
             <Link className="navbar-brand" to="/"><img src="/images/logo.png" /></Link>
           </div>
@@ -62,8 +62,11 @@ class Navbar extends React.Component {
     return (
       <ul className="nav navbar-nav navbar-right">
         <li>
-        <button className="navbar-btn btn btn-default"
-          onClick={this.props.logout}>logout {name}</button>
+        <button
+          className="navbar-btn btn btn-default"
+          onClick={this.props.logout}>
+          logout {name}
+        </button>
         </li>
       </ul>
     );

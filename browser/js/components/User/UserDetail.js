@@ -17,11 +17,11 @@ class UserDetail extends React.Component {
 
   render() {
     const { user, stories, currentUser } = this.props;
-    if (!user) return <div></div>  // the user id is invalid or data isn't loaded yet
+    if (!user) return <div />  // the user id is invalid or data isn't loaded yet
     const authorized = currentUser && (currentUser.isAdmin || currentUser.id === user.id);
     return (
       <div className="container">
-        <UserItem user={user}></UserItem>
+        <UserItem user={user} />
         <div className="panel panel-warning">
           <div className="panel-heading">
             <h2 className="panel-title large-font">stories</h2>
@@ -38,7 +38,7 @@ class UserDetail extends React.Component {
                   placeholder="Story Title"
                 />
                 <button type="submit" className="btn btn-warning btn-xs">
-                  <span className="glyphicon glyphicon-plus"></span>
+                  <span className="glyphicon glyphicon-plus" />
                 </button>
               </form>
               : null
@@ -61,7 +61,6 @@ class UserDetail extends React.Component {
       title: event.target.title.value,
       author_id: user.id
     };
-    console.log('submit', story);
     addStory(story);
     event.target.title.value = '';
   }

@@ -32,7 +32,7 @@ class StoryDetail extends React.Component {
   render() {
     const {users, currentUser} = this.props;
     const story = this.state.story;
-    if (!story) return <div></div>; // the story id is invalid or the data isnt loaded yet
+    if (!story) return <div />; // the story id is invalid or the data isnt loaded yet
     const authorized = currentUser && (currentUser.isAdmin || currentUser.id === story.author_id);
     return (
       <div className="container story-container">
@@ -54,8 +54,8 @@ class StoryDetail extends React.Component {
                 value={story.author_id}
                 onChange={evt => this.onStoryUpdate({ author_id: evt.target.value })}>
                 {
-                  users.map((user, index) => (
-                    <option key={index} value={user.id}>{user.name}</option>
+                  users.map(user => (
+                    <option key={user.id} value={user.id}>{user.name}</option>
                   ))
                 }
               </select>
@@ -68,8 +68,8 @@ class StoryDetail extends React.Component {
           disabled={ !authorized }
           placeholder="(text here)"
           html={this.renderRawHTML()}
-          onChange={evt => this.onStoryUpdate({ paragraphs: evt.target.value })}>
-        </ContentEditable>
+          onChange={evt => this.onStoryUpdate({ paragraphs: evt.target.value })}
+        />
       </div>
     );
   }
@@ -104,7 +104,7 @@ class StoryDetail extends React.Component {
 /* -----------------    CONTAINER     ------------------ */
 
 const mapState = ({ users, stories, currentUser }, ownProps) => {
-  const story = stories.find(story => story.id === +ownProps.params.id);
+  const story = stories.find(aStory => aStory.id === +ownProps.params.id);
   return { story, users, currentUser };
 };
 

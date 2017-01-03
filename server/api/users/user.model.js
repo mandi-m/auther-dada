@@ -21,7 +21,9 @@ var User = db.define('user', {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },
-  googleId: Sequelize.STRING
+  googleId: Sequelize.STRING,
+  githubId: Sequelize.STRING,
+  twitterId: Sequelize.STRING
 }, {
   scopes: {
     populated: () => ({

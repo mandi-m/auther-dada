@@ -52,13 +52,30 @@ class Login extends React.Component {
               <span>{message} with Google</span>
             </a>
           </p>
+          <p>
+            <a
+              target="_self"
+              href="/api/auth/github"
+              className="btn btn-social btn-github">
+              <i className="fa fa-github" />
+              <span>{message} with GitHub</span>
+            </a>
+          </p>
+          <p>
+            <a
+              target="_self"
+              href="/api/auth/twitter"
+              className="btn btn-social btn-twitter">
+              <i className="fa fa-twitter" />
+              <span>{message} with Twitter</span>
+            </a>
+          </p>
         </div>
       </div>
     );
   }
 
   onLoginSubmit(event) {
-    // const { message } = this.props;
     event.preventDefault();
     const credentials = {
       email: event.target.email.value,

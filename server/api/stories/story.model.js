@@ -1,6 +1,7 @@
 'use strict';
 
 var Sequelize = require('sequelize');
+const sanitize = require('sanitize-html');
 
 var db = require('../../_db');
 
@@ -12,7 +13,11 @@ var Story = db.define('story', {
   },
   paragraphs: {
     type: Sequelize.ARRAY(Sequelize.TEXT),
-    defaultValue: []
+    defaultValue: [],
+    set: function (rawParagraphs) {
+      const sanitizedParagraphs = rawParagraphs.map(p => sanitize(p));
+      this.setDataValue('paragraphs', sanitizedParagraphs);
+    }
   }
 }, {
   scopes: {

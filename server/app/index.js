@@ -10,8 +10,10 @@ app.use(require('./logging.middleware'));
 
 app.use(require('./body-parsing.middleware'));
 
+var secrets = require('../../secrets');
+
 app.use(session({
-  secret: 'winGARdium leviOHsa',
+  secret: secrets.session,
   resave: false,
   saveUninitialized: false
 }));

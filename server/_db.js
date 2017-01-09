@@ -2,9 +2,7 @@
 
 var Sequelize = require('sequelize');
 
-var secrets = require('../secrets');
-
-var databaseURI = secrets.dbURI;
+var databaseURI = 'postgres://localhost:5432/auther';
 
 var db = new Sequelize(databaseURI, {
   define: {

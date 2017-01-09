@@ -4,11 +4,9 @@ const TwitterStrategy = require('passport-twitter');
 
 const User = require('../users/user.model');
 
-var secrets = require('../../../secrets');
-
 passport.use(new TwitterStrategy({
   consumerKey: 'xe86sGm0HUu7qTwnQBq89dX02',
-  consumerSecret: secrets.twitter,
+  consumerSecret: 'pD1XEQgYppFpztd86H14d8EQWR0627yZRrFMP53DSOuMf4YaoQ',
   callbackURL: '/api/auth/twitter/verify'
 }, function (token, refreshToken, profile, done) {
   // twitter may not provide an email, if so we'll just fake it

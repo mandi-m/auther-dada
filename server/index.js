@@ -2,19 +2,11 @@
 
 var app = require('./app');
 var db = require('./db');
-var fs = require('fs');
-var https = require('https');
 
-var port = 8443;
-const credentials = {
-  key: fs.readFileSync('key.pem'),
-  cert: fs.readFileSync('cert.pem')
-};
-var server = https.createServer(credentials, app);
-
-server.listen(port, function (err) {
+var port = 8080;
+var server = app.listen(port, function (err) {
   if (err) throw err;
-  console.log('HTTPS server patiently listening on port', port);
+  console.log('HTTP server patiently listening on port', port);
   db.sync()
   .then(function () {
     console.log('Oh and btw the postgres server is totally connected, too');

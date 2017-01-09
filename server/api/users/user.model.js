@@ -3,7 +3,6 @@
 var Sequelize = require('sequelize');
 
 var db = require('../../_db');
-var crypto = require('crypto');
 
 var User = db.define('user', {
   name: Sequelize.STRING,
@@ -17,37 +16,15 @@ var User = db.define('user', {
     allowNull: false,
     unique: true
   },
-  password: {
-    type: Sequelize.STRING,
-    set: function (plaintext) {
-      this.setDataValue('password', this.hashPassword(plaintext));
-    }
-  },
+  password: Sequelize.STRING,
   isAdmin: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },
   googleId: Sequelize.STRING,
   githubId: Sequelize.STRING,
-  twitterId: Sequelize.STRING,
-  salt: {
-    type: Sequelize.STRING,
-    defaultValue: function () {
-      return crypto.randomBytes(16).toString('base64');
-    }
-  }
+  twitterId: Sequelize.STRING
 }, {
-  defaultScope: {
-    attributes: {exclude: ['password', 'salt']}
-  },
-  instanceMethods: {
-    hashPassword: function (plaintext) {
-      return crypto.pbkdf2Sync(plaintext, this.salt, 10000, 64).toString('base64');
-    },
-    isPasswordValid: function (attempt) {
-      return this.hashPassword(attempt) === this.password;
-    }
-  },
   scopes: {
     populated: () => ({
       include: [{

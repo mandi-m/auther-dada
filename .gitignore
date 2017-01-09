@@ -1,7 +1,5 @@
 # secrets, shhhhhh
 secrets.json
-cert.pem
-key.pem
 
 # project-specific folders and files
 build/

@@ -45,8 +45,7 @@ export default function reducer (users = [], action) {
 
 export const fetchUsers = () => dispatch => {
   axios.get('/api/users')
-       .then(res => dispatch(init(res.data)))
-       .catch(err => dispatch(init([])));
+       .then(res => dispatch(init(res.data)));
 };
 
 // optimistic

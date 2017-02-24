@@ -3,7 +3,7 @@
 var app = require('express')();
 var path = require('path');
 var session = require('express-session');
-const {SESSION_SECRET} = require('../../../secrets.json')
+const {SESSION_SECRET} = require('../../secrets.json')
 
 // "Enhancing" middleware (does not send response, server-side effects only)
 
@@ -15,7 +15,7 @@ app.use(session({
   secret: SESSION_SECRET,
   resave: false,
   saveUninitialized: false
-}));
+})); // req.session for sure exists now
 
 app.use(require('./passport.middleware'));
 
@@ -33,6 +33,8 @@ app.use(require('./passport.middleware'));
 
 // "Responding" middleware (may send a response back to client)
 
+
+// NOW if someone is logged in we have access to req.user === user instance. If nobody is logged in req.user === undefined
 app.use('/api', require('../api/api.router'));
 
 var validFrontendRoutes = ['/', '/stories', '/users', '/stories/:id', '/users/:id', '/signup', '/login'];

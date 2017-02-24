@@ -28,7 +28,7 @@ router.post('/', function (req, res, next) {
   .spread((user, created) => {
     if (created) {
       // with Passport:
-      req.logIn(user, function (err) {
+      req.logIn(user, function (err) { // calls serializeUser with found/created user
         if (err) return next(err);
         res.json(user);
       });

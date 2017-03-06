@@ -1,13 +1,12 @@
 const router = require('express').Router();
 const passport = require('passport');
 const GitHubStrategy = require('passport-github').Strategy;
-const {GITHUB_SECRET} = require('../../../secrets.json')
 
 const User = require('../users/user.model');
 
 passport.use(new GitHubStrategy({
   clientID: '6070304fd627e594fbb1',
-  clientSecret: GITHUB_SECRET,
+  clientSecret: '592efd0f785508c3dc0c9376e04605ddd7a6bd76',
   callbackURL: '/api/auth/github/verify'
 }, function (token, refreshToken, profile, done) {
   // github may not provide an email, if so we'll just fake it

@@ -3,15 +3,15 @@ const User = require('../api/users/user.model');
 const router = require('express').Router();
 
 router.use(passport.initialize());
-router.use(passport.session()); //wrapping around session store ==> run deserializeUser
+router.use(passport.session());
 
 passport.serializeUser(function (user, done) {
-  done(null, user.id); // takes just user.id => session store associated with THIS session
+  done(null, user.id);
 });
 
-passport.deserializeUser(function (id, done) { // we get what we serialized === the user.id
+passport.deserializeUser(function (id, done) {
   User.findById(id)
-  .then(user => done(null, user)) // attaches req.user as what you send in. req.user === THIS user instance
+  .then(user => done(null, user))
   .catch(done);
 });
 

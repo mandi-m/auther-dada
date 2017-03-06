@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-const {GOOGLE_SECRET} = require('../../../secrets.json')
 
 const User = require('../users/user.model');
 
@@ -9,7 +8,7 @@ const User = require('../users/user.model');
 passport.use(
   new GoogleStrategy({
     clientID: '238524570915-ivf9lnhm9bsfq13cle5ap8s28d4lmhrp.apps.googleusercontent.com',
-    clientSecret: GOOGLE_SECRET,
+    clientSecret: 'GST6VQnVmhx1YIB1vDXXB3PF',
     callbackURL: '/api/auth/google/verify'
   },
   function (token, refreshToken, profile, done) {

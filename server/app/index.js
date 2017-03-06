@@ -3,7 +3,6 @@
 var app = require('express')();
 var path = require('path');
 var session = require('express-session');
-const {SESSION_SECRET} = require('../../../secrets.json')
 
 // "Enhancing" middleware (does not send response, server-side effects only)
 
@@ -12,7 +11,7 @@ app.use(require('./logging.middleware'));
 app.use(require('./body-parsing.middleware'));
 
 app.use(session({
-  secret: SESSION_SECRET,
+  secret: 'winGARdium leviOHsa',
   resave: false,
   saveUninitialized: false
 }));

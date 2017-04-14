@@ -3,6 +3,7 @@
 var app = require('express')();
 var path = require('path');
 var session = require('express-session');
+var secrets  = require('../../secrets');
 
 // "Enhancing" middleware (does not send response, server-side effects only)
 
@@ -11,7 +12,7 @@ app.use(require('./logging.middleware'));
 app.use(require('./body-parsing.middleware'));
 
 app.use(session({
-  secret: 'winGARdium leviOHsa',
+  secret: secrets.session,
   resave: false,
   saveUninitialized: false
 }));

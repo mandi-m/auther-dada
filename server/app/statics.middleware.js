@@ -9,7 +9,6 @@ var browserPath = path.join(rootPath, 'browser');
 var buildPath = path.join(rootPath, 'build');
 var nodeModulesPath = path.join(rootPath, 'node_modules');
 
-router.use(express.static(rootPath));
 router.use(express.static(browserPath));
 router.use(express.static(buildPath));
 router.use(express.static(nodeModulesPath));
